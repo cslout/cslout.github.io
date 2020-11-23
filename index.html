@@ -25,6 +25,7 @@
 
 
 <script>
+    var recId = '5001X000007SirUQAS'; 
     function callLightningOut(componentName) {
 
 
@@ -39,14 +40,7 @@
 
                 $Lightning.createComponent(
                     cmpname,
-                    {msg:JSON.stringify({
-                        "noDataText": "There is no case",
-                        "textStep1": "Ihre Post ist bei uns eingetroffen",
-                        "textStep2": "Ihr Anliegen ist in Bearbeitung",
-                        "textStep3": "Ihr Anliegen ist gelöst",
-                        "hideNoData": "true",
-                        "headineText": "Ihr Anliegen"
-                    })},
+                    {recordId: recId},
                     "lwcLightning",
                     (cmp) => {
                         console.log("LWC component was created");
