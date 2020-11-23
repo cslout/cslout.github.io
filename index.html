@@ -30,6 +30,14 @@
         var urlParams = new URLSearchParams(queryString);
         var recId = urlParams.get('recordId');
     
+        $Lightning.use(
+            "c:lightningOut",
+            () => {
+          
+            },
+            "https://eon--develop1.lightning.force.com",
+                urlParams.get('token')
+        );
         function callLightningOut(componentName, title) {
            let divId = title; 
            let content = document.querySelector('.c-id'); 
@@ -43,25 +51,18 @@
           <div id="${title}"></div>`; 
            card.id = title; 
           content.appendChild(card); 
-            $Lightning.use(
-                "c:lightningOut",
-                () => {
-                    let cmpname = `c:${componentName}`;
+          let cmpname = `c:${componentName}`;
     
-                    $Lightning.createComponent(
-                        cmpname,
-                        {recordId: recId},
-                        divId,
-                        () => {
-                            console.log("LWC component was created");
-                            
-                        document.querySelector(`${title}loader`).remove(); 
-                        }
-                    );
-                },
-                "https://eon--develop1.lightning.force.com",
-                    urlParams.get('token')
-            );
+          $Lightning.createComponent(
+              cmpname,
+              {recordId: recId},
+              divId,
+              (cmp) => {
+                  console.log("LWC component was created");
+                  
+              document.querySelector(`${title}loader`).remove(); 
+              }
+          );
     
         }
         async function presentActionSheet() {
