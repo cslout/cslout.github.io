@@ -30,16 +30,20 @@
     var urlParams = new URLSearchParams(queryString);
     var recId = urlParams.get('recordId');
 
-    function callLightningOut(componentName) {
+    function callLightningOut(componentName, title) {
 
-
-
+       let content = document.querySelector('.c-id'); 
+        console.log("v23")
+       let card = document.createElement('ion-card');
+       card.innerHTML = ` <ion-card-header>
+        <ion-card-title>${title}</ion-card-title>
+      </ion-card-header>
+      <div id="lwcLightning"></div>`; 
+       card.id = title; 
+      content.appendChild(card); 
         $Lightning.use(
             "c:lightningOut",
             () => {
-                let loading = document.createElement('ion-progress-bar');
-                loading.setAttribute("type", "indeterminate"); 
-                document.body.appendChild(loading);
                 let cmpname = `c:${componentName}`;
 
                 $Lightning.createComponent(
@@ -48,7 +52,6 @@
                     "lwcLightning",
                     (cmp) => {
                         console.log("LWC component was created");
-                        loading.remove(); 
                     }
                 );
             },
@@ -159,7 +162,7 @@
               
             </ion-card-header>
           
-            <ion-card-content>
+            <ion-card-content class="c-id">
                 <ion-label>Aktuelle Rechnung vom 12.10.2020: 130,99€</ion-label>
             </br> <ion-chip color="tertiary">
                
