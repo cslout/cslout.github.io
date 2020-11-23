@@ -57,7 +57,7 @@
               cmpname,
               {recordId: recId},
               divId,
-              (cmp) => {
+              function(cmp) {
                   console.log("LWC component was created");
                   
               document.querySelector(`${title}loader`).remove(); 
