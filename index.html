@@ -25,7 +25,10 @@
 
 
 <script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
     var recId = urlParams.get('recordId');
+
     function callLightningOut(componentName) {
 
 
