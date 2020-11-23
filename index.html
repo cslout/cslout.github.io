@@ -31,14 +31,14 @@
         var recId = urlParams.get('recordId');
     
         function callLightningOut(componentName, title) {
-    
+           let divId = title; 
            let content = document.querySelector('.c-id'); 
             console.log("v3")
            let card = document.createElement('ion-card');
            card.innerHTML = ` <ion-card-header>
             <ion-card-title>${title}</ion-card-title>
           </ion-card-header>
-          <div id="lwcLightning"></div>`; 
+          <div id="${title}"></div>`; 
            card.id = title; 
           content.appendChild(card); 
             $Lightning.use(
@@ -49,7 +49,7 @@
                     $Lightning.createComponent(
                         cmpname,
                         {recordId: recId},
-                        "lwcLightning",
+                        divId,
                         (cmp) => {
                             console.log("LWC component was created");
                         }
