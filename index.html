@@ -3,28 +3,176 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Using Ionic without any framework</title>
+    <title>Lightning Out POC</title>
 
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <script src="https://eon--develop1.lightning.force.com/lightning/lightning.out.js"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+    <style>
+        :root {
+          --ion-safe-area-top: 20px;
+          --ion-safe-area-bottom: 22px;
+        }
+      </style>
+      <script type="module">
+        import { actionSheetController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+        window.actionSheetController = actionSheetController;
+      </script>
 </head>
 <body>
 
-<!-- We create a vanilla Javascript function to call the alert -->
+
 <script>
-    hello = async function () {
-        alert('Hello World!');
-    };
+    function callLightningOut(componentName) {
+
+
+
+        $Lightning.use(
+            "c:lightningOut",
+            () => {
+                let loading = document.createElement('ion-progress-bar');
+                loading.setAttribute("type", "indeterminate"); 
+                document.body.appendChild(loading);
+                let cmpname = `c:${componentName}`;
+
+                $Lightning.createComponent(
+                    cmpname,
+                    {msg:JSON.stringify({
+                        "noDataText": "There is no case",
+                        "textStep1": "Ihre Post ist bei uns eingetroffen",
+                        "textStep2": "Ihr Anliegen ist in Bearbeitung",
+                        "textStep3": "Ihr Anliegen ist gelöst",
+                        "hideNoData": "true",
+                        "headineText": "Ihr Anliegen"
+                    })},
+                    "lwcLightning",
+                    (cmp) => {
+                        console.log("LWC component was created");
+                        loading.remove(); 
+                    }
+                );
+            },
+            "https://eon--develop1.lightning.force.com",
+            "<%- accessToken %>"
+        );
+
+
+
+
+
+
+
+    }
+    async function presentActionSheet() {
+        const actionSheet = document.createElement('ion-action-sheet');
+      
+        actionSheet.header = 'Albums';
+        actionSheet.cssClass = 'my-custom-class';
+        actionSheet.buttons = [{
+          text: 'Abweichenden Empfänger hinzufügen',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            callLightningOut("DA_SC_AddRecipientWrapper"); 
+          }
+        }, {
+          text: 'Abweichenden Empfänger ändern',
+          icon: 'share',
+          handler: () => {
+            callLightningOut("DA_SC_ChangeRecipientWrapper"); 
+          }
+        }, {
+          text: 'Abschlag anpassen',
+          icon: 'caret-forward-circle',
+          handler: () => {
+            callLightningOut("daApAmendPaymentWrapper"); 
+          }
+        }, {
+          text: 'Zahlungsart anpassen',
+          icon: 'heart',
+          handler: () => {
+            callLightningOut("DA_NextStep_BankDetailsWrapper"); 
+          }
+        }, 
+        {
+            text: 'Vertrag bündeln',
+            icon: 'heart',
+            handler: () => {
+                callLightningOut("DA_BundlingWrapper"); 
+            }
+          }, 
+          {
+            text: 'Adresse bearbeiten',
+            icon: 'heart',
+            handler: () => {
+                callLightningOut("daManageAddressInitiator"); 
+            }
+          }, 
+          {
+            text: 'Rechnung korrigieren',
+            icon: 'heart',
+            handler: () => {
+                callLightningOut("DA_InvoiceCorrectionWrapper"); 
+            }
+          }, 
+          {
+            text: 'Payback-Nummer bearbeiten',
+            icon: 'heart',
+            handler: () => {
+                callLightningOut("DA_EditPaybackNumber"); 
+            }
+          },  {
+            text: 'Persönliche Daten bearbeiten',
+            icon: 'heart',
+            handler: () => {
+                callLightningOut("daEditContactWrapper"); 
+            }
+          },
+          {
+            text: 'Einwilligungen verwalten',
+            icon: 'heart',
+            handler: () => {
+                callLightningOut("DA_OptIn_EinholungWrapper"); 
+            }
+          }];
+        document.body.appendChild(actionSheet);
+        return actionSheet.present();
+      }
 </script>
 
 <!-- We declare an Ionic app using the <ion-app/> element -->
-<ion-app>
+<ion-app>      
+    <ion-toolbar>
+    <ion-title>Lightning Out Prototype</ion-title>
+
+
+  </ion-toolbar>
+</ion-header>
     <!-- Cool thing, the Ionic CSS utilities could be used too -->
-    <ion-content text-center>
-        <h1>Basic usage</h1>
+    <ion-content text-center fullscreen class="ion-padding">
         <!-- We add an ion-button with an onclick event -->
-        <ion-button onclick="hello()">Click me</ion-button>
+        <ion-card>
+
+            <ion-card-header>
+              <ion-card-subtitle>Vertragskonto-Nr. 123456</ion-card-subtitle>
+              <ion-card-title>Max Mustermann</ion-card-title>
+              
+            </ion-card-header>
+          
+            <ion-card-content>
+                <ion-label>Aktuelle Rechnung vom 12.10.2020: 130,99€</ion-label>
+            </br> <ion-chip color="tertiary">
+               
+                    <ion-label color="dark">Neuer Tarif verfügbar!</ion-label>
+                  </ion-chip>
+
+                  <div id="lwcLightning"></div>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-button onclick="presentActionSheet()" expand="full">Vertrag bearbeiten</ion-button>
     </ion-content>
 </ion-app>
 
