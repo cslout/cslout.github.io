@@ -35,8 +35,10 @@
            let content = document.querySelector('.c-id'); 
             console.log("v3")
            let card = document.createElement('ion-card');
-           card.innerHTML = ` <ion-card-header>
+           card.innerHTML = `
+           <ion-progress-bar type="indeterminate" id="${title}loader"></ion-progress-bar> <ion-card-header>
             <ion-card-title>${title}</ion-card-title>
+
           </ion-card-header>
           <div id="${title}"></div>`; 
            card.id = title; 
@@ -52,6 +54,8 @@
                         divId,
                         (cmp) => {
                             console.log("LWC component was created");
+                            
+                        document.querySelector(`${title}loader`).remove(); 
                         }
                     );
                 },
