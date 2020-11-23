@@ -33,7 +33,7 @@
     function callLightningOut(componentName, title) {
 
        let content = document.querySelector('.c-id'); 
-        console.log("v23")
+        console.log("v3")
        let card = document.createElement('ion-card');
        card.innerHTML = ` <ion-card-header>
         <ion-card-title>${title}</ion-card-title>
@@ -76,66 +76,66 @@
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            callLightningOut("DA_SC_AddRecipientWrapper"); 
+            callLightningOut("DA_SC_AddRecipientWrapper", "Abweichenden Empfänger hinzufügen"); 
           }
         }, {
           text: 'Abweichenden Empfänger ändern',
           icon: 'share',
           handler: () => {
-            callLightningOut("DA_SC_ChangeRecipientWrapper"); 
+            callLightningOut("DA_SC_ChangeRecipientWrapper",'Abweichenden Empfänger ändern'); 
           }
         }, {
           text: 'Abschlag anpassen',
           icon: 'caret-forward-circle',
           handler: () => {
-            callLightningOut("daApAmendPaymentWrapper"); 
+            callLightningOut("daApAmendPaymentWrapper",'Abschlag anpassen'); 
           }
         }, {
           text: 'Zahlungsart anpassen',
           icon: 'heart',
           handler: () => {
-            callLightningOut("DA_NextStep_BankDetailsWrapper"); 
+            callLightningOut("DA_NextStep_BankDetailsWrapper",'Zahlungsart anpassen'); 
           }
         }, 
         {
             text: 'Vertrag bündeln',
             icon: 'heart',
             handler: () => {
-                callLightningOut("DA_BundlingWrapper"); 
+                callLightningOut("DA_BundlingWrapper",'Vertrag bündeln'); 
             }
           }, 
           {
             text: 'Adresse bearbeiten',
             icon: 'heart',
             handler: () => {
-                callLightningOut("daManageAddressInitiator"); 
+                callLightningOut("daManageAddressInitiator", 'Adresse bearbeiten'); 
             }
           }, 
           {
             text: 'Rechnung korrigieren',
             icon: 'heart',
             handler: () => {
-                callLightningOut("DA_InvoiceCorrectionWrapper"); 
+                callLightningOut("DA_InvoiceCorrectionWrapper",'Rechnung korrigieren'); 
             }
           }, 
           {
             text: 'Payback-Nummer bearbeiten',
             icon: 'heart',
             handler: () => {
-                callLightningOut("DA_EditPaybackNumber"); 
+                callLightningOut("DA_EditPaybackNumber",'Payback-Nummer bearbeiten'); 
             }
           },  {
             text: 'Persönliche Daten bearbeiten',
             icon: 'heart',
             handler: () => {
-                callLightningOut("daEditContactWrapper"); 
+                callLightningOut("daEditContactWrapper",'Persönliche Daten bearbeiten'); 
             }
           },
           {
             text: 'Einwilligungen verwalten',
             icon: 'heart',
             handler: () => {
-                callLightningOut("DA_OptIn_EinholungWrapper"); 
+                callLightningOut("DA_OptIn_EinholungWrapper",'Einwilligungen verwalten'); 
             }
           }];
         document.body.appendChild(actionSheet);
